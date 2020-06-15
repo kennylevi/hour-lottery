@@ -112,16 +112,16 @@ export default class Login extends Vue {
     }
     this.state.loader = true;
     // eslint-disable-next-line no-unreachable
-    UserService.login(this.formData)
-      .then(res => {
+    UserService.login(this.formData).then(
+      res => {
         this.state.loader = false;
         console.log(res);
         this.$v.$reset();
         setObjectEmptyHelper(this.formData);
         // let save the toke in the storage
         token.setAuthUser(res.data);
-      })
-      .catch(err => {
+      },
+      err => {
         this.state.loader = false;
         console.log(err.response);
         NotificationService.error(
@@ -129,7 +129,8 @@ export default class Login extends Vue {
           null,
           CUSTOM_CONSTANTS.DEFAULT_ERROR_MESSAGE
         );
-      });
+      }
+    );
   }
 }
 </script>
