@@ -1,5 +1,5 @@
 import apiHandler from "./RequestHandler";
-import { API_URLS } from '../utilities/api-url';
+import { API_URLS } from "../utilities/api-url";
 
 class User {
   login(payload: any): Promise<any> {

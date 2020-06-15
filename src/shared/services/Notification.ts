@@ -1,34 +1,34 @@
-import Vue from 'vue'
-import {errorHelper} from '../utilities/helper';
- 
+import Vue from "vue";
+import { errorHelper } from "../utilities/helper";
+
 class Alert {
   success(text: string, title: string, duration?: any, speed?: any) {
     Vue.notify({
-      group: 'user',
+      group: "user",
       title,
       text,
-      type: 'success',
-    })
+      type: "success"
+    });
   }
 
   error(text: string, err: any, title: string, duration?: any, speed?: any) {
     const response = errorHelper(text, err);
     Vue.notify({
-      group: 'user',
+      group: "user",
       title,
       text: response,
-      type: 'error'
-    })
+      type: "error"
+    });
   }
 
   warning(text: string, title: string, duration?: any, speed?: any) {
     Vue.notify({
-      group: 'user',
+      group: "user",
       title,
       text,
-      type: 'warn'
-    })
+      type: "warn"
+    });
   }
 }
 
-export const NotificationService =  new Alert();
+export const NotificationService = new Alert();

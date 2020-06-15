@@ -1,4 +1,3 @@
-
 const state = {
   modalType: ""
 };
@@ -16,10 +15,9 @@ const mutations = {
 };
 
 const actions = {
-  openModal( context: any, modalType: string) {
-    context.commit('modal', modalType);
+  openModal(context: any, modalType: string) {
+    context.commit("modal", modalType);
   }
- 
 };
 
 export default {
@@ -27,4 +25,4 @@ export default {
   getters,
   actions,
   mutations
-}
+};
