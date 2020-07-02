@@ -75,7 +75,7 @@
                     <div class="title1">Sunday, May 31 Jackpot:</div>
                     <div class="title2">173 million</div>
                     <p>Play as many times and come back for the next draw</p>
-                    <a class=" mt-5 btn btn-outline-primary" href="#"
+                    <a class=" mt-5 btn btn-outline-primary" href="#"  @click="openSidebar()"
                       >Play Now</a
                     >
 
@@ -216,7 +216,11 @@ import WinnerSlider from "../templates/WinnersSlide.vue";
     WinnerSlider
   }
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {
+    openSidebar() {
+      this.$store.dispatch("openSidebar", true);
+    }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

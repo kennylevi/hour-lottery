@@ -4,9 +4,10 @@ export const API_URLS = {
       login: "login",
       register: "register"
     },
-    profile: "user/users",
+    profile: "user/profile",
     users: "users",
     transactions: "user/transactions",
-    wallet: "user/wallet"
+    wallet: "user/wallet",
+    fund_wallet: "user/fund-wallet"
   }
 };

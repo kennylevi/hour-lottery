@@ -24,6 +24,9 @@
                       <login v-if="modalType === 'LOGIN'" />
                       <!-- Login component ends  -->
 
+                      <!-- ForgotPassword component  -->
+                      <ForgotPassword v-if="modalType === 'FORGOTPASSWORD'" />
+                      
                       <!-- register component  -->
                       <Register v-if="modalType === 'REGISTER'" />
                       <!-- </register component end  -->
@@ -63,10 +66,16 @@
                         </button>
                       </form> -->
 
+                      <!-- WalletLoad component  -->
+                      <EnterAmount v-if="modalType === 'ENTERAMOUNT'" />
+                      <!-- </EnterAmount component end  -->
+
                       <button
+                       id="closeBtn"
                         type="button"
                         class="btn btn-block btn-outline-danger mt-3"
                         data-dismiss="modal"
+                        ref="closeBtn"
                       >
                         Cancel
                       </button>
@@ -96,13 +105,17 @@
 import Vue from "vue";
 import Login from "./Login.vue";
 import Register from "./Register.vue";
+import ForgotPassword from "./ForgotPassword.vue";
+import EnterAmount from "./EnterAmount.vue";
 
 export default Vue.extend({
   name: "Modal",
 
   components: {
     Login,
-    Register
+    Register,
+    ForgotPassword,
+    EnterAmount
   },
 
   data() {
@@ -111,6 +124,13 @@ export default Vue.extend({
 
   computed: {
     modalType(): string {
+      console.log("Modal type", this.$store.getters.modalType)
+      if(this.$store.getters.modalType == 'CLOSE') {
+        //console.log(this.$refs);
+        (<HTMLElement>document.getElementById('closeBtn')).click()
+        //this.$refs.closeBtn.click()
+        //elem.click()
+      }
       return this.$store.getters.modalType;
     }
   },
@@ -118,3 +138,10 @@ export default Vue.extend({
   methods: {}
 });
 </script>
+
+   
+<style scoped>
+.modal-dialog{
+   min-width: 100%;
+}
+</style>

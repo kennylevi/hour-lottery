@@ -55,7 +55,7 @@
       <i class="fa fa-sign-in"></i> Sign in
       <i class="k-loader k-loader--light" v-if="state.loader"></i>
     </button>
-    <a href="#" id="forgot_pswd">Forgot password?</a>
+    <a href="#" @click="goToRegister('FORGOTPASSWORD')" id="forgot_pswd">Forgot password?</a>
     <hr />
     <!-- <p>Don't have an account!</p>  -->
     <button
@@ -76,7 +76,7 @@ import { NotificationService } from "../../../shared/services/Notification";
 import { Validations } from "vuelidate-property-decorators";
 import { required } from "vuelidate/lib/validators";
 import { CUSTOM_CONSTANTS } from "../../../shared/utilities/constants";
-import { setObjectEmptyHelper } from "../../../shared/utilities/helper";
+import { setObjectEmptyHelper, triggerModalOrOverlay } from "../../../shared/utilities/helper";
 import Token from "../../../shared/services/Token";
 // import { Validation } from "vuelidate";
 
@@ -119,7 +119,16 @@ export default class Login extends Vue {
         this.$v.$reset();
         setObjectEmptyHelper(this.formData);
         // let save the toke in the storage
-        token.setAuthUser(res.data);
+        token.setAuthUser(res.data.data);
+        this.$store.dispatch("loggedIn", true);
+        this.$store.dispatch("setUser", res.data.data);
+        this.$store.dispatch("openModal", "CLOSE");
+        triggerModalOrOverlay("CLOSE",  "modal-fullscreen")
+        NotificationService.success(
+          "Login successful",
+          CUSTOM_CONSTANTS.DEFAULT_SUCCESS_MESSAGE,
+          6
+        );
       },
       err => {
         this.state.loader = false;

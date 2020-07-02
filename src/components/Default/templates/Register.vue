@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="submit" novalidate class="form-signup">
+  <form @submit.prevent="submit" novalidate class="form-login">
     <div class="main-logo">
       <img class="img-responsive" src="@/assets/images/mhl_logo.png" />
     </div>
