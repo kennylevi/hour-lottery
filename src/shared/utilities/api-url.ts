@@ -7,6 +7,7 @@ export const API_URLS = {
     profile: "user/users",
     users: "users",
     transactions: "user/transactions",
-    wallet: "user/wallet"
+    wallet: "user/wallet",
+    games: "games"
   }
 };

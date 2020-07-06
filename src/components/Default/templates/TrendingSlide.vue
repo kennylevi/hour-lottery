@@ -89,6 +89,12 @@ import carousel from "vue-owl-carousel";
 
 export default {
   name: "TrendingGameSlider",
-  components: { carousel }
+  components: { carousel },
+  created() {
+    console.log("wanna fetch API11111");
+  },
+  mounted() {
+    console.log("wanna fetch API22222");
+  }
 };
 </script>

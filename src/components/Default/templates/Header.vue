@@ -107,7 +107,7 @@ export default {
 
   methods: {
     changeModalLink(event) {
-      this.$store.dispatch("openModal", event); // asdign data modal type to coming event
+      this.$store.dispatch("openModal", event); // assign data modal type to coming event
     }
   }
 };
