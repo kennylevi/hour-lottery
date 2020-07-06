@@ -84,6 +84,62 @@
               >
             </li>
           </ul>
+          <ul v-if="loggedIn" class="nav navbar-nav sf-menu navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-user"></span> 
+                            <strong>Welcome, {{ user.first_name }} {{ user.last_name }}</strong>
+                            <span class="glyphicon glyphicon-chevron-down"></span>
+                        </a>
+                        <ul class="dropdown-menu userLoginName">
+                            <li>
+                                <div class="navbar-login">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 mb-3">
+                                            <p class="text-right" style="font-size: 16px;"><strong>{{ user.first_name }} {{ user.last_name }}</strong></p>
+                                            <p class="text-right small">Available Balance: {{ $n(walletBalance, 'currency') }} </p>
+                                            <p class="text-right">
+                                                <a
+                                                @click="changeModalLink('ENTERAMOUNT')"
+                                                href="#"
+                                                class="btn btn-success mt-2"
+                                                data-toggle="modal"
+                                                data-target="#modal-fullscreen"
+                                                style="background: #F6CD19; font-size: 12px; color: #000; padding: 3px 20px; border: none; border-radius: 0;">Fund Wallet</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="divider"></li>
+                                    <!-- Button trigger modal -->
+
+                              <div class="list-group">
+                                <a href="javascript:dirtypop();" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#betslip">
+                                  Bet List
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">Transaction List</a>
+                                <a href="javascript:dirtypop();" data-toggle="modal" data-target="#changePassword" class="list-group-item list-group-item-action">Change Password</a>
+                                <a href="#" class="list-group-item list-group-item-action">Account</a>
+                                <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">Vestibulum at eros</a>
+                              </div>
+                             <hr>
+
+                            <li>
+                                <div class="navbar-login navbar-login-session">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12">
+
+                                            <p>
+                                                <a @click="logout()" href="#" class="btn btn-danger btn-block" style="border-radius: 0px;">Logout</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
         </div>
       </nav>
 
@@ -93,24 +149,54 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
 import Modal from "./Modal.vue";
+import Token from "../../../shared/services/Token";
+import { setObjectEmptyHelper, triggerModalOrOverlay } from "../../../shared/utilities/helper";
 
-export default {
+const token = new Token(); // instatitae token
+
+export default Vue.extend({
+  name: "Header",
   components: {
     Modal
   },
 
   data() {
-    return {};
+    return {
+      walletBalance: 0.0
+    }
+  },
+  computed: {
+    loggedIn(): string {
+      //console.log(this.$store.getters.loggedIn)
+      return this.$store.getters.loggedIn;
+    },
+    user(): any {
+      console.log("Token: ",this.$store.getters.getUser)
+      return this.$store.getters.getUser;
+    }
+  },
+
+  watch: {
+    user(val: any): any {
+      console.log("User: ", val)
+      this.walletBalance = val.wallet.wallet_balance
+      //return this.$store.getters.getUser;
+    },
   },
 
   methods: {
-    changeModalLink(event) {
-      this.$store.dispatch("openModal", event); // assign data modal type to coming event
+    changeModalLink(event: string): void {
+      triggerModalOrOverlay("OPEN",  "modal-fullscreen")
+      this.$store.dispatch("openModal", event); // asdign data modal type to coming event
+    },
+
+    logout(): void {
+      token.removeAuthUser()
+      this.$store.dispatch("loggedIn", false); // asdign data modal type to coming event
     }
   }
-};
+});
 </script>
-
-<style></style>

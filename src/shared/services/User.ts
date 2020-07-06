@@ -9,6 +9,10 @@ class User {
   register(payload: any): Promise<any> {
     return apiHandler.post(`${API_URLS.user.account.register}`, payload);
   }
+
+  fundWallet(payload: any): Promise<any> {
+    return apiHandler.post(`${API_URLS.user.fund_wallet}`, payload);
+  }
 }
 
 // esport

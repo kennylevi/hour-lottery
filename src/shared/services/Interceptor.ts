@@ -13,7 +13,7 @@ export default class Interceptor {
             "Content-Type": "application/json",
             Accept: "application/json"
           };
-          config.headers.Authorization = token.getAuthUserToken();
+          config.headers.Authorization = "Bearer "+token.getAuthUserToken();
           console.log(config);
           return config;
         } else {

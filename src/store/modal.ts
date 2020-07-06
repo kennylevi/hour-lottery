@@ -16,6 +16,7 @@ const mutations = {
 
 const actions = {
   openModal(context: any, modalType: string) {
+    console.log(modalType)
     context.commit("modal", modalType);
   }
 };
