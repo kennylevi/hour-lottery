@@ -94,6 +94,10 @@ nav {
     padding-top: 0px;
 }
 
+.navbar-collapse  {
+  z-index: 999;
+}
+
 .icon-size
 {
     font-size: 87px;
@@ -169,16 +173,7 @@ height: auto;
 
 /* First level sub-menu styles
 ========================================================*/
-/*.sf-menu ul {
-  position: absolute;
-  background: #eae6e3;
-  z-index: 999;
-  top: 71px;
-  left: 0;
-  width: 100%;
-  padding: 10px 0 11px;
-  text-align: center;
-}
+
 
 .sf-menu {
   z-index: 990;
@@ -189,24 +184,18 @@ height: auto;
 .sf-menu > li {
   display: inline-block;
   float: left;
-  min-height: 70px;
   position: relative;
   text-transform: uppercase;
 }
-.sf-menu > li + li {
-  border-left: 1px solid #097337;
-  margin-left: -1px;
-}
+
 .sf-menu > li > a {
   display: block;
   background: #0D7B3C;
   text-align: center;
   position: relative;
   color: #eae6e3;
-  font: 400 14px/70px 'Roboto', sans-serif;
   text-transform: uppercase;
   text-decoration: none;
-  letter-spacing: 1.3px;
   padding: 0;
   -webkit-transition: 0.4s all ease;
   transition: 0.4s all ease;
@@ -222,21 +211,18 @@ height: auto;
   background: #eae6e3;
 }
 .sf-menu > li > a.sf-with-ul:after {
-  position: absolute;
-  content: '';
-  left: 48%;
-  top: 57px;
-  width: 14px;
-  height: 8px;
+
   pointer-events: none;
   z-index: 999;
   display: block;
-  background: url(../images/arrow_menu.png) 0 0 no-repeat;
+  /*background: url(../images/arrow_menu.png) 0 0 no-repeat;*/
   opacity: .7;
   -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=70)';
-}*/
+}
+
 /* First level sub-menu styles
 ========================================================*/
+
 /*.sf-menu ul {
   position: absolute;
   background: #eae6e3;
@@ -383,15 +369,10 @@ height: auto;
 #logreg-forms{
     width:512px;
     margin:10vh auto;
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-  position: absolute;
-    top: 40%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-      background: rgba(46, 62, 75, 0.1);
-      padding: 20px 30px;
-      border-radius: 30px;
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    background: rgba(46, 62, 75, 0.1);
+    padding: 20px 30px;
+    border-radius: 30px;
 }
 #logreg-forms form {
     width: 100%;
@@ -566,7 +547,9 @@ height: auto;
 .list-group-item { background:none !important; }
 
 
+@media only screen and (max-width: 768px) {
 
+}
 
 
 
@@ -633,13 +616,11 @@ table {
     right: 5px;
   }
 }
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 768px) {
   nav {
     height: 90px;
   }
-  .sf-menu {
-    display: none;
-  }
+
   .select-menu {
     background: #ffffff;
     border: 1px solid #097337;
@@ -652,7 +633,9 @@ table {
     text-transform: uppercase;
     width: 100%;
   }
+
 }
+
 /* Stuck menu styles
 ========================================================*/
 .isStuck {
@@ -1158,10 +1141,6 @@ box-shadow: 0px 0px 53px -16px rgba(0,0,0,0.5);
   border:0px;
   padding: 10px 20px;
   font-size: 12px;
-}
-
-.games .owl-carousel .owl-item .thumb .btn:disabled {
-    cursor: not-allowed;
 }
 .games .owl-carousel .owl-item .thumb:hover p, a {
   color: #000;
