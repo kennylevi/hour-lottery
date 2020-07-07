@@ -1,7 +1,5 @@
 import axios from "axios";
-import Token from "./Token";
-
-const token = new Token(); // set token
+import {token} from '@/shared/services/Token';
 
 export default class Interceptor {
   intercept() {

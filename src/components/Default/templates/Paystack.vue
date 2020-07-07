@@ -112,8 +112,8 @@ export default Vue.extend({
     },
     methods: {
         loadScript(callback) {
-            const script = document.createElement('script')
-            script.src = 'https://js.paystack.co/v1/inline.js'
+            const script = document.createElement('script');
+            script.src = 'https://js.paystack.co/v1/inline.js';
             document.getElementsByTagName('head')[0].appendChild(script)
             if (script.readyState) {  // IE
                 script.onreadystatechange = () => {
@@ -156,7 +156,7 @@ export default Vue.extend({
                 if (this.embed) {
                     paystackOptions.container = 'paystackEmbedContainer'
                 }
-                const handler = window.PaystackPop.setup(paystackOptions)
+                const handler = window.PaystackPop.setup(paystackOptions);
                 if (!this.embed) {
                     handler.openIframe()
                 }

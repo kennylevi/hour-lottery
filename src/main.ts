@@ -14,7 +14,7 @@ new Interceptor().intercept();
 // module imported to be used
 Vue.use(Notifications);
 Vue.use(Vuelidate);
-Vue.use(VueI18n)
+Vue.use(VueI18n);
 
 
 Vue.config.productionTip = false;
@@ -41,7 +41,7 @@ const numberFormats = {
 const i18n = new VueI18n({
   numberFormats,
   locale: 'en-NG'
-})
+});
 
 new Vue({
   i18n,

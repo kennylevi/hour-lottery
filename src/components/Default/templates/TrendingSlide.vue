@@ -6,7 +6,23 @@
       </div>
     </div>
 
-    <div class="row">
+<!--    skeleton loader starts-->
+    <div class="skeleton" v-if="loader">
+      <div class="card">
+        <figure class="sk-loading"></figure>
+        <div class="card-base sk-loading"></div>
+      </div>
+      <div class="card">
+        <figure class="sk-loading"></figure>
+        <div class="card-base sk-loading"></div>
+      </div>
+      <div class="card">
+        <figure class="sk-loading"></figure>
+        <div class="card-base sk-loading"></div>
+      </div>
+    </div>
+<!--    skeleton loader ends-->
+    <div class="row" v-if="!loader">
       <div class="grid_12 col-md-12 wrap">
         <carousel
           :autoplay="true"
@@ -17,67 +33,19 @@
           :autoWidth="true"
           :responsive="{ 0: { items: 1 }, 768: { items: 4 } }"
         >
-          <div class="item">
+
+          <div class="item" v-for="(game, index) in games" :key="index + 1">
             <div class="thumb">
-              <img src="@/assets/images/game1.png" alt="" />
+              <img :src="require(`@/assets/images/${games.length === 2 ? 'game1' : 'game2'}.png`)" :alt="game.name" />
               <div class="caption">
-                <p>1 day 15 hours</p>
-                <a class=" ml-5 btn btn-outline-primary" href="#">Play Now</a>
+<!--                <p>1 day 15 hours</p>-->
+                <p>{{game.name}}</p>
+                <button class="ml-5 btn btn-outline-primary" :disabled="!game.is_enabled" v-on:click="playGame(game)">Play Now</button>
               </div>
             </div>
           </div>
 
-          <div class="item">
-            <div class="thumb">
-              <img src="@/assets/images/game2.png" alt="" />
-              <div class="caption">
-                <p>1 day 15 hours</p>
-                <a class=" ml-5 btn btn-outline-primary" href="#">Play Now</a>
-              </div>
-            </div>
-          </div>
 
-          <div class="item">
-            <div class="thumb">
-              <img src="@/assets/images/game1.png" alt="" />
-              <div class="caption">
-                <p class="awaiting">awaiting results</p>
-                <a class=" ml-5 btn disabled btn-outline-primary" href="#"
-                  >Play Now</a
-                >
-              </div>
-            </div>
-          </div>
-
-          <div class="item">
-            <div class="thumb">
-              <img src="@/assets/images/game2.png" alt="" />
-              <div class="caption">
-                <p>1 day 15 hours</p>
-                <a class=" ml-5 btn btn-outline-primary" href="#">Play Now</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="item">
-            <div class="thumb">
-              <img src="@/assets/images/game1.png" alt="" />
-              <div class="caption">
-                <p>1 day 15 hours</p>
-                <a class=" ml-5 btn btn-outline-primary" href="#">Play Now</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="item">
-            <div class="thumb">
-              <img src="@/assets/images/game2.png" alt="" />
-              <div class="caption">
-                <p>1 day 15 hours</p>
-                <a class=" ml-5 btn btn-outline-primary" href="#">Play Now</a>
-              </div>
-            </div>
-          </div>
         </carousel>
       </div>
     </div>
@@ -86,15 +54,39 @@
 
 <script>
 import carousel from "vue-owl-carousel";
+import {GameService} from '@/shared/services/Games';
+import {NotificationService} from '@/shared/services/Notification';
+import {CUSTOM_CONSTANTS} from '@/shared/utilities/constants';
 
 export default {
   name: "TrendingGameSlider",
   components: { carousel },
-  created() {
-    console.log("wanna fetch API11111");
+  data() {
+    return {
+      loader: false,
+      games: []
+    }
   },
-  mounted() {
-    console.log("wanna fetch API22222");
+  created() {
+    this.loader = true;
+    GameService.getGames().then(res => {
+      console.log(res.data);
+      this.games = res.data.data; // assign games
+      this.loader = false;
+    }, err => {
+      this.loader = false;
+      NotificationService.error('Error', err, CUSTOM_CONSTANTS.DEFAULT_ERROR_MESSAGE);
+    })
+  },
+
+  methods: {
+    playGame(data) {
+      console.log(data);
+    }
   }
 };
 </script>
+
+<style lang="scss">
+  @import '../../../scss/skeletons.scss';
+</style>

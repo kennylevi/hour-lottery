@@ -75,12 +75,9 @@ import { UserService } from "../../../shared/services/User";
 import { NotificationService } from "../../../shared/services/Notification";
 import { Validations } from "vuelidate-property-decorators";
 import { required } from "vuelidate/lib/validators";
-import { CUSTOM_CONSTANTS } from "../../../shared/utilities/constants";
-import { setObjectEmptyHelper, triggerModalOrOverlay } from "../../../shared/utilities/helper";
-import Token from "../../../shared/services/Token";
-// import { Validation } from "vuelidate";
-
-const token = new Token(); // instatitae token
+import { CUSTOM_CONSTANTS } from '../../../shared/utilities/constants';
+import { setObjectEmptyHelper, triggerModalOrOverlay } from '@/shared/utilities/helper';
+import { token } from '@/shared/services/Token';
 
 @Component({})
 export default class Login extends Vue {
@@ -118,12 +115,11 @@ export default class Login extends Vue {
         console.log(res);
         this.$v.$reset();
         setObjectEmptyHelper(this.formData);
-        // let save the toke in the storage
-        token.setAuthUser(res.data.data);
-        this.$store.dispatch("loggedIn", true);
-        this.$store.dispatch("setUser", res.data.data);
-        this.$store.dispatch("openModal", "CLOSE");
-        triggerModalOrOverlay("CLOSE",  "modal-fullscreen")
+        token.setAuthUser(res.data.data); // let save the token in the storage
+        this.$store.dispatch("loggedIn", true); // set login state
+        this.$store.dispatch("setUser", res.data.data); // set user state too
+        this.$store.dispatch("openModal", "CLOSE"); // close modal
+        triggerModalOrOverlay("CLOSE",  "modal-fullscreen");
         NotificationService.success(
           "Login successful",
           CUSTOM_CONSTANTS.DEFAULT_SUCCESS_MESSAGE,

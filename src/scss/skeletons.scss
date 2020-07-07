@@ -1,0 +1,58 @@
+.skeleton {
+  position: relative;
+  max-height: 300px;
+  display: flex;
+  margin: 0 0 1px;
+  padding: 10px;
+
+  .card {
+    overflow: hidden;
+    background-color: #fff;
+    padding: 2px;
+    position: relative;
+    border-radius: 2px;
+    margin-bottom: 0;
+    margin-left: 0;
+    height: 200px;
+    max-width: 350px;
+    width: 320px;
+
+    figure {
+      height: 120px;
+      overflow: hidden;
+    }
+
+    .card-base {
+      margin: 30px;
+      height: 30px;
+    }
+  }
+}
+
+.sk-loading {
+  position: relative;
+  background-color: #E2E2E2;
+
+  &.card-image {
+    border-radius: 0;
+  }
+
+  &::after {
+    display: block;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .2), transparent);
+    animation: loading 0.6s infinite;
+  }
+}
+
+
+
+@keyframes loading {
+  100% {
+    transform: translateX(100%);
+  }
+}

@@ -30,17 +30,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import { UserService } from "../../../shared/services/User";
-import { NotificationService } from "../../../shared/services/Notification";
+import { Component, Vue } from 'vue-property-decorator';
+import { UserService } from '@/shared/services/User';
+import { NotificationService } from '@/shared/services/Notification';
 import { Validations } from "vuelidate-property-decorators";
 import { required } from "vuelidate/lib/validators";
-import { CUSTOM_CONSTANTS } from "../../../shared/utilities/constants";
-import { setObjectEmptyHelper } from "../../../shared/utilities/helper";
-import Token from "../../../shared/services/Token";
-// import { Validation } from "vuelidate";
-
-const token = new Token(); // instatitae token 
+import { CUSTOM_CONSTANTS } from '@/shared/utilities/constants';
+import { setObjectEmptyHelper } from '@/shared/utilities/helper';
+import { token } from '@/shared/services/Token';
 
 @Component({})
 export default class ForgotPassword extends Vue {

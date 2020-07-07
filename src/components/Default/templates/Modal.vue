@@ -124,12 +124,10 @@ export default Vue.extend({
 
   computed: {
     modalType(): string {
-      console.log("Modal type", this.$store.getters.modalType)
+      console.log("Modal type", this.$store.getters.modalType);
       if(this.$store.getters.modalType == 'CLOSE') {
         //console.log(this.$refs);
-        (<HTMLElement>document.getElementById('closeBtn')).click()
-        //this.$refs.closeBtn.click()
-        //elem.click()
+        (<HTMLElement>document.getElementById('closeBtn')).click();
       }
       return this.$store.getters.modalType;
     }

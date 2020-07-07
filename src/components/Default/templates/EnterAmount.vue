@@ -39,17 +39,14 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import  Paystack  from "./Paystack.vue";
-import { UserService } from "../../../shared/services/User";
-import { NotificationService } from "../../../shared/services/Notification";
+import Paystack  from "./Paystack.vue";
+import { UserService } from '@/shared/services/User';
+import { NotificationService } from '@/shared/services/Notification';
 import { Validations } from "vuelidate-property-decorators";
 import { required } from "vuelidate/lib/validators";
-import { CUSTOM_CONSTANTS } from "../../../shared/utilities/constants";
-import { setObjectEmptyHelper, triggerModalOrOverlay } from "../../../shared/utilities/helper";
-import Token from "../../../shared/services/Token";
-// import { Validation } from "vuelidate";
-
-const token = new Token(); // instatitae token 
+import { CUSTOM_CONSTANTS } from '@/shared/utilities/constants';
+import { setObjectEmptyHelper, triggerModalOrOverlay } from '@/shared/utilities/helper';
+import {token} from '@/shared/services/Token';
 
 @Component({
   components: {Paystack}
@@ -86,13 +83,12 @@ export default class EnterAmount extends Vue {
 
     for( let i=0; i < 10; i++ )
       text += possible.charAt(Math.floor(Math.random() * possible.length));
-
     return text;
   }
 
   get user(){
-    console.log("Token: ",this.$store.getters.getUser)
-    return this.$store.getters.getUser;
+    console.log("Token: ",this.$store.getters.getUser);
+    return token.getAuthUser();
   }
 
   goToRegister(type: string) {
@@ -105,28 +101,6 @@ export default class EnterAmount extends Vue {
       return;
     }
     this.state.loader = true;
-    
-    // eslint-disable-next-line no-unreachable
-    // UserService.login(this.formData).then(
-    //   res => {
-    //     this.state.loader = false;
-
-    //     console.log(res);
-    //     this.$v.$reset();
-    //     setObjectEmptyHelper(this.formData);
-    //     // let save the toke in the storage
-    //     token.setAuthUser(res.data);
-    //   },
-    //   err => {
-    //     this.state.loader = false;
-    //     console.log(err.response);
-    //     NotificationService.error(
-    //       err.response.data.message,
-    //       null,
-    //       CUSTOM_CONSTANTS.DEFAULT_ERROR_MESSAGE
-    //     );
-    //   }
-    // );
   }
 
   callback(response: any): void{

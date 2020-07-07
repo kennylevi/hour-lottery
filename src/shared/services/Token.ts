@@ -1,7 +1,7 @@
 import { CUSTOM_CONSTANTS } from "../utilities/constants";
 import { Cookie, Session } from "../utilities/Cache";
 
-export default class Token {
+class Token {
   isTokenLogged = () => {
     return !!this.getAuthUser();
   };
@@ -49,3 +49,5 @@ export default class Token {
     localStorage.clear();
   };
 }
+
+export const token = new Token();
