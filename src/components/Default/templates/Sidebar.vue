@@ -114,6 +114,11 @@
         computed: {
             openNav(): string {
                 console.log(this.$store.getters.openNav);
+                if(window.innerWidth < 767){
+                    this.open.width = '100%'
+                } else {
+                    this.open.with = '20%'
+                }
                 return this.$store.getters.openNav;
             }
         },
