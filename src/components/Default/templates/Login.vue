@@ -57,7 +57,7 @@
     </button>
     <a href="#" @click="goToRegister('FORGOTPASSWORD')" id="forgot_pswd">Forgot password?</a>
     <hr />
-    <!-- <p>Don't have an account!</p>  -->
+    <!-- <p>Don't have an account!</p> -->
     <button
       class="btn btn-primary btn-block"
       type="button"

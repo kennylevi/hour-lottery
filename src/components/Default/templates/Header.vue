@@ -208,12 +208,14 @@ export default Vue.extend({
 
   computed: {
     isLoggedIn(): boolean {
+      console.log(this.$store.getters.loggedIn);
       return this.$store.getters.loggedIn || !!token.getAuthUser();
     },
 
     userData(): any {
       console.log("Token: ", this.$store.getters.getUser);
-      return  token.getAuthUser() || this.$store.getters.getUser
+      this.walletBalance =  (token.getAuthUser() && token.getAuthUser().wallet.wallet_balance) || this.$store.getters.getUser.wallet.wallet_balance;
+      return token.getAuthUser() || this.$store.getters.getUser
     }
   },
 

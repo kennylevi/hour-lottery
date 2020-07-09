@@ -45,6 +45,10 @@ a:hover,
 .table a:hover {
   color: #2e3e4b;
 }
+
+.btn:disabled {
+    cursor: not-allowed;
+}
 h5 a:hover {
   color: #0D7B3C;
 }
