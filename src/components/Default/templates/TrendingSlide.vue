@@ -40,7 +40,7 @@
               <div class="caption">
 <!--                <p>1 day 15 hours</p>-->
                 <p>{{game.name}}</p>
-                <button class="ml-5 btn btn-outline-primary" :disabled="!game.is_enabled" v-on:click="playGame(game)">Play Now</button>
+                <button class="ml-5 btn btn-outline-primary" :disabled="!game.is_enabled" v-on:click="playGame(game, index)">Play Now</button>
               </div>
             </div>
           </div>
@@ -80,8 +80,11 @@ export default {
   },
 
   methods: {
-    playGame(data) {
+    playGame(data, index) {
       console.log(data);
+      this.$store.dispatch("openSidebar", true);
+      this.$store.dispatch('addGame', data);
+      this.games[index].is_enabled = false
     }
   }
 };

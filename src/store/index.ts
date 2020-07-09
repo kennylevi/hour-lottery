@@ -2,7 +2,8 @@ import Vue from "vue";
 import Vuex from "vuex";
 import MODAL_STORE from "./modal";
 import TEMPLATE_STORE from "./template";
-import LOGGEDIN from "./login";
+import LOGGED_IN from "./login";
+import GAMES from './games'
 
 
 Vue.use(Vuex);
@@ -14,6 +15,7 @@ export default new Vuex.Store({
   modules: {
     MODAL_STORE,
     TEMPLATE_STORE,
-    LOGGEDIN
+    LOGGED_IN,
+    GAMES
   }
 });

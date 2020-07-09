@@ -47,9 +47,9 @@
                                       <img src="@/assets/images/trash.png" height="auto" width="10" style="margin-top: 10px; cursor: pointer;"
                                            v-on:click="removeGame(index)">
                                     </td>
-                                    <td>{{game.name}}</td>
-                                    <td>05 Jun</td>
-                                    <td><span class="symbol"></span><span class="recalc">{{game.amt}}</span></td>
+                                    <td>{{game && game.name}}</td>
+                                    <td>05 Jun {{parseFloat(game && game.amount)}}</td>
+                                    <td><span class="symbol"></span><span class="recalc">{{game && game.amount}}</span></td>
                                 </tr>
                                 <tr v-if="!games.length">
                                     <td colspan="5" class="text-center">
@@ -63,13 +63,15 @@
                     </div>
 
                     <ul class="list-group alert alert-success">
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Omoge Campus Game
+                        <li class="list-group-item d-flex justify-content-between align-items-center" v-if="coupon">
+
                             <span class="badge badge-primary badge-pill">₦500</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             Total
-                            <span class="badge badge-primary badge-pill">₦500</span>
+                            <span class="badge badge-primary badge-pill">
+                                ₦{{games.length && games.reduce((a, {amount}) => Number(a) + Number(amount), 0) + '.' + '00'}}
+                            </span>
                         </li>
                     </ul>
                     <div class="checkoutMobile">
@@ -99,6 +101,10 @@
 
         components: {},
 
+        destroyed() {
+          localStorage.removeItem('GAMES');
+        },
+
         data() {
             return {
                 open: {
@@ -107,17 +113,41 @@
                 close: {
                     width: '0%'
                 },
-                games: [{id: 1, name: 'kENNY', amt: 200}, {id: 2, name: 'BABA', amt: 100}]
+                coupon: false
             };
         },
 
+        watch: {
+            amount(): any {
+
+            }
+        },
+
         computed: {
+
             openNav(): string {
-                console.log(this.$store.getters.openNav);
+                // console.log(this.$store.getters.openNav);
                 if (window.innerWidth < 768) {
                   this.open.width = '100%'
                 }
                 return this.$store.getters.openNav;
+            },
+
+            games(): any[] {
+                console.log(this.$store.getters.games);
+                let games = [];
+                // check if the store as games
+                if (!this.$store.getters.games) {
+                    console.log('YES');
+                    games = JSON.parse(<any>localStorage.getItem('GAMES'));
+                } else {
+                    console.log('NO');
+                    games = this.$store.getters.games || JSON.parse(<any>localStorage.getItem('GAMES'));
+                }
+                if (this.$store.getters.games.length) {
+                    localStorage.setItem('GAMES', JSON.stringify(this.$store.getters.games));
+                }
+                return games
             }
         },
 
