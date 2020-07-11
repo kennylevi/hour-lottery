@@ -158,6 +158,9 @@
             removeGame(index: number): void {
               console.log(index);
               this.games.splice(index, 1);
+            },
+            submit() {
+                console.log(this.games)
             }
         }
     });

@@ -123,8 +123,8 @@
                 </li>
                 <li class="divider"></li>
                 <!-- Button trigger modal -->
-
-                <div class="list-group">
+                <li>
+                  <div class="list-group">
                   <a
                     href="javascript:dirtypop();"
                     class="list-group-item list-group-item-action"
@@ -155,6 +155,8 @@
                   >
                 </div>
                 <hr />
+                </li>
+                
 
                 <li>
                   <div class="navbar-login navbar-login-session">
