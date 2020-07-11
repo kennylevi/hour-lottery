@@ -84,13 +84,11 @@
               >
             </li>
           </ul>
-          <ul v-if="isLoggedIn" class="nav navbar-nav sf-menu navbar-right">
+          <ul class="nav navbar-nav sf-menu navbar-right" v-bind:class="!isLoggedIn ? 'd-none' : 'd-block'">
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <a href="javascript:void(0)" class="dropdown-toggle d-block" data-toggle="dropdown">
                 <span class="glyphicon glyphicon-user"></span>
-                <strong
-                  >Welcome, {{ userData.first_name }} {{ userData.last_name }}</strong
-                >
+                <strong>Welcome, {{ userData && userData.first_name }} {{ userData && userData.last_name }}</strong>
                 <span class="glyphicon glyphicon-chevron-down"></span>
               </a>
               <ul class="dropdown-menu userLoginName">
@@ -100,7 +98,7 @@
                       <div class="col-lg-12 col-md-12 mb-3">
                         <p class="text-right" style="font-size: 16px;">
                           <strong
-                            >{{ userData.first_name }} {{ userData.last_name }}</strong
+                            >{{ userData && userData.first_name }} {{ userData && userData.last_name }}</strong
                           >
                         </p>
                         <p class="text-right small">
@@ -204,20 +202,36 @@ export default Vue.extend({
 
   data() {
     return {
-      walletBalance: 0
+      walletBalance: 0,
+      loggedIn: false,
+      loggedData: {}
     };
   },
 
   computed: {
     isLoggedIn(): boolean {
-      console.log(this.$store.getters.loggedIn);
-      return this.$store.getters.loggedIn || !!token.getAuthUser();
+      // return this.$store.getters.loggedIn
+      if (this.$store.getters.loggedIn) {
+        console.log(this.$store.getters.loggedIn);
+        this.loggedIn = this.$store.getters.loggedIn;
+      }
+      this.loggedIn = !!token.getAuthUser();
+      return this.loggedIn;
     },
 
     userData(): any {
       console.log("Token: ", this.$store.getters.getUser);
-      this.walletBalance =  (token.getAuthUser() && token.getAuthUser().wallet.wallet_balance) || this.$store.getters.getUser.wallet.wallet_balance;
-      return token.getAuthUser() || this.$store.getters.getUser
+      if (this.$store.getters.loggedIn) {
+        this.walletBalance = this.$store.getters.getUser.wallet.wallet_balance;
+        this.loggedData = this.$store.getters.getUser;
+      }
+
+      if (!!token.getAuthUser()) {
+        console.log(token.getAuthUser());
+        this.loggedData = token.getAuthUser();
+        this.walletBalance = token.getAuthUser().wallet.wallet_balance;
+      }
+      return this.loggedData
     }
   },
 
@@ -230,12 +244,17 @@ export default Vue.extend({
   },
 
   methods: {
+    openMenu(): boolean {
+      return this.isLoggedIn
+    },
+
     changeModalLink(event: string): void {
       triggerModalOrOverlay("OPEN", "modal-fullscreen");
       this.$store.dispatch("openModal", event); // assign data modal type to coming event
     },
 
     logout(): void {
+      this.loggedIn = false;
       token.removeAuthUser();
       this.$store.dispatch("loggedIn", false); // assign data modal type to coming event
     }
