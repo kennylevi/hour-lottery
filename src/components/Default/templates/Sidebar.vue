@@ -11,17 +11,20 @@
                 <div class="card-header" style="background-color: #F6CD19; font-weight: bold;">DEPOSIT NOW</div>
                 <div class="card-body">
                     <h5 class="card-title">Insert Coupon Code</h5>
-                    <p class="card-text">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Coupon Code" aria-label="Recipient's username"
-                               aria-describedby="button-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button" id="button-addon2"
-                                    style="background:#F6CD19; border-color: #F6CD19;  color:#000;">Apply Code
-                            </button>
-                        </div>
+                    <div class="card-text">
+                        <form @submit.prevent="addCoupon">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Coupon Code" aria-describedby="button-addon2" v-model="couponValue"
+                                       required>
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit" id="button-addon2" :disabled="loader === 'COUPON'"
+                                            style="background:#F6CD19; border-color: #F6CD19;  color:#000;">Apply Code <i style="margin-bottom:
+                                            -20px" class="d-flex position-static k-loader k-loader--skin-dark" v-if="loader === 'COUPON'"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    </p>
                 </div>
             </div>
 
@@ -48,7 +51,10 @@
                                            v-on:click="removeGame(index)">
                                     </td>
                                     <td>{{game && game.name}}</td>
-                                    <td>05 Jun {{parseFloat(game && game.amount)}}</td>
+                                    <td>
+                                        {{dateFormatter(game && game.start_date).format('Do')}}
+                                        {{dateFormatter(game && game.start_date).format('MMM')}}
+                                    </td>
                                     <td><span class="symbol"></span><span class="recalc">{{game && game.amount}}</span></td>
                                 </tr>
                                 <tr v-if="!games.length">
@@ -63,21 +69,24 @@
                     </div>
 
                     <ul class="list-group alert alert-success">
-                        <li class="list-group-item d-flex justify-content-between align-items-center" v-if="coupon">
-
-                            <span class="badge badge-primary badge-pill">₦500</span>
+                        <li class="list-group-item d-flex justify-content-between align-items-center" v-if="coupon" v-for="data in couponData">
+                            {{data && data.coupon_code}}
+                            <span class="badge badge-primary badge-pill">₦{{data && data.value}}</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             Total
                             <span class="badge badge-primary badge-pill">
-                                ₦{{games.length && games.reduce((a, {amount}) => Number(a) + Number(amount), 0) + '.' + '00'}}
+                                ₦{{(games.length && games.reduce((a, {amount}) => Number(a) + Number(amount), 0)) - (couponData.length &&
+                                couponData.reduce((a, {value}) => Number(a) + Number(value), 0)) + '.' + '00'}}
                             </span>
                         </li>
                     </ul>
                     <div class="checkoutMobile">
                         <button id="checkout" class="btn2 btn-orange pull-right link checkoutBth" data-link="/confirm" type="button"
-                                style="display: inline-block; border: none;">
+                                style="display: inline-block; border: none;" v-on:click="submitGame">
                             <span title="Tickets">Confirm &nbsp;<i class="fa fa-arrow-circle-right"></i></span>
+                            <i style="margin-bottom:
+                                            -20px" class="d-flex position-static k-loader k-loader--light" v-if="loader === 'SUBMIT'"></i>
                         </button>
                         <div class="clearfix"></div>
                     </div>
@@ -95,6 +104,11 @@
 
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
+    import {dateFormatter} from '@/shared/utilities/helper';
+    import {MiscService} from '@/shared/services/Misc';
+    import {NotificationService} from '@/shared/services/Notification';
+    import {CUSTOM_CONSTANTS} from '@/shared/utilities/constants';
+    import {UserService} from '@/shared/services/User';
 
     export default Vue.extend({
         name: 'Sidebar',
@@ -113,7 +127,10 @@
                 close: {
                     width: '0%'
                 },
-                coupon: false
+                coupon: false,
+                couponValue: '',
+                couponData: <any>[],
+                loader: ''
             };
         },
 
@@ -156,9 +173,41 @@
                 this.$store.dispatch('openSidebar', false);
             },
             removeGame(index: number): void {
-              console.log(index);
               this.games.splice(index, 1);
+            },
+            dateFormatter,
+            addCoupon: function (): void {
+                this.loader = 'COUPON';
+                MiscService.validateCoupon(this.couponValue).then(res => {
+                    this.loader = '';
+                    this.couponValue = '';
+                    console.log(res.data.data);
+                    this.coupon = true;
+                    this.couponData.unshift(res.data.data);
+                }, err => {
+                    this.loader = '';
+                    NotificationService.error(`${err.response.data.message}`, err, CUSTOM_CONSTANTS.DEFAULT_ERROR_MESSAGE);
+                })
+            },
+            submitGame(): void {
+                const payload = {
+                    games: this.games,
+                    coupon: this.couponData
+                };
+                console.log(payload);
+                this.loader = 'SUBMIT';
+                UserService.playGame(payload).then(res => {
+                    this.loader = '';
+                    console.log(res.data);
+                    NotificationService.success(`${res.data.message}`, CUSTOM_CONSTANTS.DEFAULT_SUCCESS_MESSAGE);
+                    this.games = [];
+                }, err => {
+                    this.loader = '';
+                    console.log(err);
+                    NotificationService.error('Error', err, CUSTOM_CONSTANTS.DEFAULT_ERROR_MESSAGE);
+                })
             }
+
         }
     });
 </script>

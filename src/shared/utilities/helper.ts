@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 declare const $: any;
 
 export const errorHelper = (
@@ -5,20 +7,18 @@ export const errorHelper = (
   error: any | Array<string> | Array<object>
 ): string => {
   let response = errorMessage;
-  console.log(error);
+  console.log(error.response);
 
-  if (error !== null) {
+  if (error) {
     if (error.status === 400 || error.status === 422) {
       // TODO if bad request
       if (
-        !error.data.errors ||
-        error.data.errors === null ||
-        typeof error.data.errors === "string"
+          !error.response.data.errors
       ) {
-        response = error.data.message + "<br>";
+        response = error.response.data.message + "<br>";
       } else {
         response = `<i>Validation Error</i><br>`;
-        for (const err in error.data.errors) {
+        for (const err in error.response.data.errors) {
           if (error.data.errors.hasOwnProperty(err)) {
             error.data.errors[err].forEach((e: string) => {
               response += ". " + e + "<br>";
@@ -26,6 +26,8 @@ export const errorHelper = (
           }
         }
       }
+    } else {
+      response = error.response.data.message + "<br>";
     }
   }
 
@@ -56,4 +58,9 @@ export const triggerModalOrOverlay = (
   action === "SHOW"
     ? $(`#${modalId}`).modal("show")
     : $(`#${modalId}`).modal("hide");
+};
+
+
+export const dateFormatter = (date?: any) => {
+  return moment(date)
 };

@@ -57,6 +57,8 @@ import carousel from "vue-owl-carousel";
 import {GameService} from '@/shared/services/Games';
 import {NotificationService} from '@/shared/services/Notification';
 import {CUSTOM_CONSTANTS} from '@/shared/utilities/constants';
+import {token} from '@/shared/services/Token';
+import {triggerModalOrOverlay} from '@/shared/utilities/helper';
 
 export default {
   name: "TrendingGameSlider",
@@ -82,6 +84,11 @@ export default {
   methods: {
     playGame(data, index) {
       console.log(data);
+      if (!token.isTokenLogged()) {
+        triggerModalOrOverlay("SHOW", "modal-fullscreen");
+        this.$store.dispatch('openModal', 'LOGIN');
+        return NotificationService.info('Login to continue', 'Not Logged In!');
+      }
       this.$store.dispatch("openSidebar", true);
       this.$store.dispatch('addGame', data);
       this.games[index].is_enabled = false

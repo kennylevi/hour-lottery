@@ -107,6 +107,7 @@ import Login from "./Login.vue";
 import Register from "./Register.vue";
 import ForgotPassword from "./ForgotPassword.vue";
 import EnterAmount from "./EnterAmount.vue";
+import {triggerModalOrOverlay} from '@/shared/utilities/helper';
 
 export default Vue.extend({
   name: "Modal",

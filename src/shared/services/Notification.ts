@@ -29,6 +29,15 @@ class Alert {
       type: "warn"
     });
   }
+
+  info(text: string, title: string, duration?: any, speed?: any) {
+    Vue.notify({
+      group: "user",
+      title,
+      text,
+      type: "info"
+    });
+  }
 }
 
 export const NotificationService = new Alert();

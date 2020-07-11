@@ -4,7 +4,7 @@
     <notifications
       group="user"
       ignoreDuplicate="true"
-      class="animated fadeInDown"
+      class="animated fadeInDown notification"
       animation-name="'bounceInRight'"
     />
     <router-view />
@@ -17,5 +17,8 @@
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.notification {
+  z-index: 99999 !important;
 }
 </style>

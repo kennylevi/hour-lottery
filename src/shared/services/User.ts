@@ -13,7 +13,11 @@ class User {
   fundWallet(payload: any): Promise<any> {
     return apiHandler.post(`${API_URLS.user.fund_wallet}`, payload);
   }
+
+  playGame(payload: any) {
+    return apiHandler.post(`${API_URLS.user.playGame}`, payload);
+  }
 }
 
-// esport
+// export
 export const UserService = new User();
