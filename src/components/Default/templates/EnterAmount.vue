@@ -87,7 +87,7 @@ export default class EnterAmount extends Vue {
   }
 
   get user(){
-    console.log("Token: ",this.$store.getters.getUser);
+    console.log("Token: ", token.getAuthUser());
     return token.getAuthUser();
   }
 

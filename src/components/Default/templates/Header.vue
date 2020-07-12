@@ -211,6 +211,7 @@ export default Vue.extend({
   computed: {
     isLoggedIn(): boolean {
       console.log(this.$store.getters.loggedIn);
+      console.log("Storage user", token.getAuthUser())
       return this.$store.getters.loggedIn || !!token.getAuthUser();
     },
 

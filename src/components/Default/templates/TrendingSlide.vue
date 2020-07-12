@@ -40,7 +40,7 @@
               <div class="caption">
 <!--                <p>1 day 15 hours</p>-->
                 <p>{{game.name}}</p>
-                <button class="ml-5 btn btn-outline-primary" :disabled="!game.is_enabled" v-on:click="playGame(game, index)">Play Now</button>
+                <button class="ml-5 btn btn-outline-primary" :disabled="game.running_status == 'inactive'" v-on:click="playGame(game, index)">Play Now</button>
               </div>
             </div>
           </div>
