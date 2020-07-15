@@ -24,6 +24,39 @@ const routes: Array<RouteConfig> = [
           import(
             /* webpackChunkName: "about" */ "../components/Default/pages/About.vue"
           )
+      },
+      {
+        path: "/games",
+        name: "Games",
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+          import(
+            /* webpackChunkName: "games" */ "../components/Default/pages/GameList.vue"
+          )
+      },
+      {
+        path: "/winners",
+        name: "WinnersList",
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+          import(
+            /* webpackChunkName: "winners" */ "../components/Default/pages/WinnersList.vue"
+          )
+      },
+      {
+        path: "/results",
+        name: "Results",
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+          import(
+            /* webpackChunkName: "results" */ "../components/Default/pages/Results.vue"
+          )
       }
     ]
   },

@@ -25,43 +25,25 @@
                 <span class="sr-only">(current)</span>
               </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-link">
               <router-link class="nav-link" :to="{name: 'About', hash: ''}">
                 About
               </router-link>
             </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                >Games</a
-              >
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="games.html">ALL GAMES</a>
-              </div>
+            <li class="nav-item">
+              <router-link class="nav-link" :to="{name: 'Games', hash: ''}">
+                All Games
+              </router-link>
             </li>
             <li class="nav-item">
-              <a
-                class="nav-link disabled"
-                href="#"
-                tabindex="-1"
-                aria-disabled="true"
-                >Results</a
-              >
+              <router-link class="nav-link" :to="{name: 'Results', hash: ''}">
+                Results
+              </router-link>
             </li>
             <li class="nav-item">
-              <a
-                class="nav-link disabled"
-                href="#"
-                tabindex="-1"
-                aria-disabled="true"
-                >Winners</a
-              >
+              <router-link class="nav-link" :to="{name: 'WinnersList', hash: ''}">
+                Winners
+              </router-link>
             </li>
             <li class="nav-item" v-if="!isLoggedIn">
               <a
@@ -214,8 +196,10 @@ export default Vue.extend({
       if (this.$store.getters.loggedIn) {
         console.log(this.$store.getters.loggedIn);
         this.loggedIn = this.$store.getters.loggedIn;
+      } else {
+        this.loggedIn = !!token.getAuthUser();
       }
-      this.loggedIn = !!token.getAuthUser();
+      
       return this.loggedIn;
     },
 
