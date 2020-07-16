@@ -12,7 +12,10 @@ export const API_URLS = {
         playGame: 'user/play_games'
     },
     games: {
-        all: 'games'
+        all: 'games',
+        trending_games: 'games/trending_games',
+        winning_list: 'games/winning_list',
+        game_results: 'games/game_results'
     },
     misc: {
         validateCoupon: 'user/validate_coupon'

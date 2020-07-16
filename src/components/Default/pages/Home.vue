@@ -200,18 +200,21 @@
         </div>
       </div>
     </div>
+    <Footer />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import Header from "../templates/Header.vue";
+import Footer from "../templates/Footer.vue";
 import TrendingGameSlider from "../templates/TrendingSlide.vue";
 import WinnerSlider from "../templates/WinnersSlide.vue";
 
 @Component({
   components: {
     Header,
+    Footer,
     TrendingGameSlider,
     WinnerSlider
   }

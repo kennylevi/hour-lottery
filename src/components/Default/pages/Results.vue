@@ -95,107 +95,30 @@
     <div class="clear"></div>
 
     <div id="content">
-      <div class="bg2 p29">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-4 col-sm-12">
-              <div class="grid_4 wrap">
-                <div class="thumbnail">
-                  <div class="sf-steps">
-                    <div class="stp-img mr-5">
-                      <img src="@/assets/images/1.png" />
-                    </div>
-                    <div class="stp-text">
-                      <h3>Register/Sign In</h3>
-                      <p>Click JOIN NOW to create your account.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4 col-sm-12">
-              <div class="grid_4 wrap">
-                <div class="thumbnail">
-                  <div class="sf-steps">
-                    <div class="stp-img mr-5">
-                      <img src="@/assets/images/2.png" />
-                    </div>
-                    <div class="stp-text">
-                      <h3>Deposits</h3>
-                      <p>Make your first deposit using any method and Play</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4 col-sm-12">
-              <div class="grid_4">
-                <div class="thumbnail">
-                  <div class="sf-steps">
-                    <div class="stp-img mr-5">
-                      <img src="@/assets/images/3.png" />
-                    </div>
-                    <div class="stp-text">
-                      <h3>Deposits</h3>
-                      <p>we'll automatically credit you with your winnings</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- trending game section  -->
-      <div class="bg4 p47 mt-5 mb-2">
-        <div class="container">
-          <div class="games">
-            <!-- calling the carousel slider  -->
-            <TrendingGameSlider />
-            <!-- carousel ends  -->
-          </div>
-        </div>
-      </div>
-
-      <!-- middle section  -->
-      <div class="bg3">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="grid_6 wrap">
-                <div class="image">
-                  <img src="@/assets/images/winningcash22.png" alt="" />
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="grid_6 wrap">
-                <div class="block">
-                  <h2>Believe in your win! <br /><span>Good luck!</span></h2>
-                  <div class="grid_6 wrap alpha mt-5">
-                    <a href="#" class="link1">This is Where Winners Play</a>
-                    <p>
-                      If you love lotto then you'll love My Hour Lottery! We've
-                      got all the world's biggest games. Here at My Hour
-                      Lottery, you can take the chance to win millions every
-                      single day! We also have over 350 world class games for
-                      you to enjoy! We accept a wide range of payment methods
-                      and offer fast and easy withdrawals too!
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <!-- Latest winners  -->
       <div class="bg4 p50">
         <div class="container">
+          
           <!-- calling winners slider  -->
-          <WinnerSlider />
+          <div class="table-responsive">
+            <h3 class="text-success">Game Results</h3>
+            <table class="table table-striped table-bordered table-collapse">
+              <tr>
+                <th>S/N</th>
+                <th>Username</th>
+                <th>Game</th>
+                <th>Prize</th>
+                <th>Date</th>
+              </tr>
+              <tr v-for="(result, index) in results" :key="index + 1">
+                <td>{{ key }}</td>
+                <td>{{ result.username }}</td>
+                <td>{{ result.game }}</td>
+                <td>{{ result.prize }}</td>
+                <td>{{ result.username }}</td>
+              </tr>
+            </table>
+          </div>
           <!-- slider ends hers  -->
         </div>
       </div>
@@ -206,19 +129,46 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import Header from "../templates/Header.vue";
-import TrendingGameSlider from "../templates/TrendingSlide.vue";
-import WinnerSlider from "../templates/WinnersSlide.vue";
+import Footer from "../templates/Footer.vue";
+import { GameService } from '@/shared/services/Games';
+import { NotificationService } from '@/shared/services/Notification';
+import { CUSTOM_CONSTANTS } from '@/shared/utilities/constants';
 
 @Component({
   components: {
-    Header,
-    TrendingGameSlider,
-    WinnerSlider
+    Header
   }
 })
 export default class Home extends Vue {
+  state = {
+    loader: false
+  };
+  results = [];
     openSidebar() {
       this.$store.dispatch("openSidebar", true);
+    }
+
+    
+    mounted(){
+      GameService.getResults().then(
+      res => {
+        this.state.loader = false;
+
+        console.log(res.data.data);
+        this.$v.$reset();
+        this.results = res.data.data
+
+      },
+      err => {
+        this.state.loader = false;
+        console.log(err.response);
+        NotificationService.error(
+          err.response.data.message,
+          null,
+          CUSTOM_CONSTANTS.DEFAULT_ERROR_MESSAGE
+        );
+      }
+    );
     }
 }
 </script>

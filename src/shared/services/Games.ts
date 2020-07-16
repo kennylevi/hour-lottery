@@ -13,6 +13,15 @@ class Games {
     fundWallet(payload: any): Promise<any> {
         return apiHandler.post(`${API_URLS.user.fund_wallet}`, payload);
     }
+
+    getWinningList(): Promise<any> {
+        return apiHandler.get(`${API_URLS.games.winning_list}`);
+    }
+
+    getResults(): Promise<any> {
+        return apiHandler.get(`${API_URLS.games.game_results}`);
+    }
+
 }
 
 // export

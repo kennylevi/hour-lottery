@@ -25,7 +25,7 @@
                 <span class="sr-only">(current)</span>
               </a>
             </li>
-            <li class="nav-link">
+            <li class="nav-item">
               <router-link class="nav-link" :to="{name: 'About', hash: ''}">
                 About
               </router-link>
