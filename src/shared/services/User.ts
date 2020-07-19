@@ -17,6 +17,10 @@ class User {
   playGame(payload: any) {
     return apiHandler.post(`${API_URLS.user.playGame}`, payload);
   }
+
+  gameStatus(ticketNo: string) {
+    return apiHandler.get(`${API_URLS.user.ticketStatus}/${ticketNo}`);
+  }
 }
 
 // export

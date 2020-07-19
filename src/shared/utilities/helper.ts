@@ -7,7 +7,6 @@ export const errorHelper = (
   error: any | Array<string> | Array<object>
 ): string => {
   let response = errorMessage;
-  console.log(error.response);
 
   if (error) {
     if (error.status === 400 || error.status === 422) {

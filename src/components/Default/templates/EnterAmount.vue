@@ -108,12 +108,12 @@ export default class EnterAmount extends Vue {
       UserService.fundWallet(response).then(
       res => {
         this.state.loader = false;
-
+        // token.setAuthUser(res.data.data);
         console.log(res.data.data);
         this.$v.$reset();
-        var user = this.$store.getters.getUser
-        user.wallet = res.data.data
-        triggerModalOrOverlay("CLOSE",  "modal-fullscreen")
+        const user = this.$store.getters.getUser;
+        user.wallet = res.data.data;
+        triggerModalOrOverlay("CLOSE",  "modal-fullscreen");
         NotificationService.success(
           "Wallet Funded Successfully",
           CUSTOM_CONSTANTS.DEFAULT_SUCCESS_MESSAGE,

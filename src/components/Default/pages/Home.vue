@@ -157,6 +157,12 @@
           </div>
         </div>
       </div>
+      <!-- trending game section  -->
+      <div class="bg2 mt-3 p-2" v-if="isLoggedIn || state.loggedIn">
+        <div class="container">
+          <EnterTicket />
+        </div>
+      </div>
 
       <!-- middle section  -->
       <div class="bg3">
@@ -210,19 +216,45 @@ import Header from "../templates/Header.vue";
 import Footer from "../templates/Footer.vue";
 import TrendingGameSlider from "../templates/TrendingSlide.vue";
 import WinnerSlider from "../templates/WinnersSlide.vue";
+import EnterTicket from '../templates/EnterTicket.vue';
+import {token} from '@/shared/services/Token';
+import {Getter} from 'vuex';
 
 @Component({
   components: {
     Header,
     Footer,
     TrendingGameSlider,
+    EnterTicket,
     WinnerSlider
   }
 })
 export default class Home extends Vue {
-    openSidebar() {
+
+    // @Getter('loggedIn', false) isLoggedIn: boolean;
+    state  = {
+      loggedIn: false
+    };
+
+    get isLoggedIn() {
+      if (this.$store.getters.loggedIn) {
+        this.state.loggedIn = this.$store.getters.loggedIn;
+        return this.state.loggedIn
+      }
+    }
+
+    created(): void {
+      if (this.$store.getters.loggedIn) {
+        this.state.loggedIn = this.$store.getters.loggedIn;
+      } else {
+        this.state.loggedIn = !!token.getAuthUser();
+      }
+    }
+
+  openSidebar() {
       this.$store.dispatch("openSidebar", true);
     }
+
 }
 </script>
 

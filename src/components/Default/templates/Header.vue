@@ -19,29 +19,29 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav sf-menu ml-auto mt-2 mt-lg-0">
-            <li class="nav-item active current">
-              <a class="nav-link" href="/">
+            <li class="nav-item">
+              <a class="nav-link" href="/" v-bind:class="$router.path === '' ? 'current' : ''">
                 Home
-                <span class="sr-only">(current)</span>
+<!--                <span class="sr-only">(current)</span>-->
               </a>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" :to="{name: 'About', hash: ''}">
+              <router-link class="nav-link" :to="{name: 'About', hash: ''}" active-class="current">
                 About
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" :to="{name: 'Games', hash: ''}">
+              <router-link class="nav-link" :to="{name: 'Games', hash: ''}" active-class="current">
                 All Games
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" :to="{name: 'Results', hash: ''}">
+              <router-link class="nav-link" :to="{name: 'Results', hash: ''}" active-class="current">
                 Results
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" :to="{name: 'WinnersList', hash: ''}">
+              <router-link class="nav-link" :to="{name: 'WinnersList', hash: ''}" active-class="current">
                 Winners
               </router-link>
             </li>

@@ -168,7 +168,7 @@ height: auto;
 
 
 }
-.sf-menu > li.current a {
+.sf-menu > li > a.current {
   color: #0D7B3C;
   background: #eae6e3;
 }

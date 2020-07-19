@@ -29,46 +29,12 @@
                       
                       <!-- register component  -->
                       <Register v-if="modalType === 'REGISTER'" />
-                      <!-- </register component end  -->
-                      <!-- <form action="/reset/password/" class="form-reset">
-                        <div class="main-logo">
-                          <img
-                            class="img-responsive"
-                            src="@/assets/images/mhl_logo.png"
-                          />
-                        </div>
-                        <h1
-                          class="h3 mb-3 font-weight-normal"
-                          style="text-align: center"
-                        >
-                          RESET PASSWORD
-                        </h1>
-                        <input
-                          type="email"
-                          id="resetEmail"
-                          class="form-control"
-                          placeholder="Email address"
-                          required
-                          autofocus
-                        />
-                        <button class="btn btn-primary btn-block" type="submit">
-                          Reset Password
-                        </button>
-                        <a href="#" id="cancel_reset">
-                          <i class="fas fa-angle-left"></i> Back
-                        </a>
-                        <button
-                          type="button"
-                          class="btn btn-block btn-default btn-outline-primary mt-5"
-                          data-dismiss="modal"
-                        >
-                          Cancel
-                        </button>
-                      </form> -->
 
                       <!-- WalletLoad component  -->
                       <EnterAmount v-if="modalType === 'ENTERAMOUNT'" />
                       <!-- </EnterAmount component end  -->
+
+                      <TicketStatus v-if="modalType === 'TICKET_STAKES'"/>
 
                       <button
                        id="closeBtn"
@@ -77,7 +43,7 @@
                         data-dismiss="modal"
                         ref="closeBtn"
                       >
-                        Cancel
+                        Close
                       </button>
                       <br />
                     </div>
@@ -108,6 +74,7 @@ import Register from "./Register.vue";
 import ForgotPassword from "./ForgotPassword.vue";
 import EnterAmount from "./EnterAmount.vue";
 import {triggerModalOrOverlay} from '@/shared/utilities/helper';
+import TicketStatus from '@/components/Default/templates/TicketStatus.vue';
 
 export default Vue.extend({
   name: "Modal",
@@ -116,7 +83,8 @@ export default Vue.extend({
     Login,
     Register,
     ForgotPassword,
-    EnterAmount
+    EnterAmount,
+    TicketStatus
   },
 
   data() {
