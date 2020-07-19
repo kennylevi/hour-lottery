@@ -38,8 +38,7 @@
             <div class="thumb">
               <img :src="apiHost + '/app/' + game.featured_image" :alt="game.name" />
               <div class="caption">
-<!--                <p>1 day 15 hours</p>-->
-                <p>{{game.name}}</p>
+                <p>{{game.name | lowercase | titlecase}}</p>
                 <button class="ml-5 btn btn-outline-primary" :disabled="game.running_status == 'inactive'" v-on:click="playGame(game, index)">Play Now</button>
               </div>
             </div>
@@ -79,7 +78,9 @@ export default {
       this.games = res.data.data; // assign games
       this.loader = false;
     }, err => {
-      this.loader = false;
+      if (err && err.response.status === 0) {
+        this.loader = false;
+      }
       NotificationService.error('Error', err, CUSTOM_CONSTANTS.DEFAULT_ERROR_MESSAGE);
     })
   },
@@ -96,10 +97,28 @@ export default {
       this.$store.dispatch('addGame', data);
       this.games[index].is_enabled = false
     }
+  },
+  filters: {
+    lowercase(value) {
+      if (!value) {return ''}
+      return value.toLowerCase();
+    },
+    titlecase(value) {
+      if (!value) {return ''}
+      return value.replace(/\b\w/g, str => str.toLocaleUpperCase());
+    }
   }
 };
 </script>
 
 <style lang="scss">
   @import '../../../scss/skeletons.scss';
+    .caption {
+        padding: 15px 8px !important;
+        display: flex;
+        justify-content: space-between;
+        p {
+            margin-bottom: 0;
+        }
+    }
 </style>

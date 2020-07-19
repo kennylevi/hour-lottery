@@ -5,6 +5,7 @@ import store from "./store";
 import Notifications from "vue-notification";
 import Vuelidate from "vuelidate";
 import VueI18n from 'vue-i18n'
+import 'sweetalert2/src/sweetalert2.scss'
 
 // import HTTP request inerceptor
 import Interceptor from "./shared/services/Interceptor";

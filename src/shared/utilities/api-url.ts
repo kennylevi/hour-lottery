@@ -9,7 +9,8 @@ export const API_URLS = {
         transactions: 'user/transactions',
         wallet: 'user/wallet',
         fund_wallet: 'user/fund-wallet',
-        playGame: 'user/play_games'
+        playGame: 'user/play_games',
+        ticketStatus: 'user/check_ticket_status'
     },
     games: {
         all: 'games',

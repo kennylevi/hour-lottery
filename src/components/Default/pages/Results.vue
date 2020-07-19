@@ -162,11 +162,13 @@ export default class Home extends Vue {
       err => {
         this.state.loader = false;
         console.log(err.response);
-        NotificationService.error(
-          err.response.data.message,
-          null,
-          CUSTOM_CONSTANTS.DEFAULT_ERROR_MESSAGE
-        );
+        if (err.response.status !== 404) {
+          NotificationService.error(
+            err.response.data.message,
+            null,
+            CUSTOM_CONSTANTS.DEFAULT_ERROR_MESSAGE
+          );
+        }
       }
     );
     }
