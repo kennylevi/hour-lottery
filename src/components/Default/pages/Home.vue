@@ -136,7 +136,7 @@
                       <img src="@/assets/images/3.png" />
                     </div>
                     <div class="stp-text">
-                      <h3>Deposits</h3>
+                      <h3>Win</h3>
                       <p>we'll automatically credit you with your winnings</p>
                     </div>
                   </div>
