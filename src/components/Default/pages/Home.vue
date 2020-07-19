@@ -237,9 +237,12 @@ export default class Home extends Vue {
     };
 
     get isLoggedIn() {
+      console.log(this.$store.getters.loggedIn);
       if (this.$store.getters.loggedIn) {
         this.state.loggedIn = this.$store.getters.loggedIn;
         return this.state.loggedIn
+      } else {
+        return this.state.loggedIn;
       }
     }
 
