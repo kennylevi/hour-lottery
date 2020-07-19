@@ -36,7 +36,7 @@
 
           <div class="item" v-for="(game, index) in games" :key="index + 1">
             <div class="thumb">
-              <img :src="require(`@/assets/images/${games.length === 2 ? 'game1' : 'game2'}.png`)" :alt="game.name" />
+              <img :src="apiHost + '/app/' + game.featured_image" :alt="game.name" />
               <div class="caption">
 <!--                <p>1 day 15 hours</p>-->
                 <p>{{game.name}}</p>
@@ -60,11 +60,14 @@ import {CUSTOM_CONSTANTS} from '@/shared/utilities/constants';
 import {token} from '@/shared/services/Token';
 import {triggerModalOrOverlay} from '@/shared/utilities/helper';
 
+const BASE_URL = process.env.VUE_APP_BASE_URL;
+
 export default {
   name: "TrendingGameSlider",
   components: { carousel },
   data() {
     return {
+      apiHost: `${BASE_URL}`,
       loader: false,
       games: []
     }
