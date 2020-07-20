@@ -9,7 +9,7 @@ export default {
    * @param data
    * @returns Observable
    */
-  post: (path: string, data: any) => {
+  post: (path: string, data?: any) => {
     const url = `${BASE_URL}${path}`;
     console.log(url);
     return axios.post(url, data || {});

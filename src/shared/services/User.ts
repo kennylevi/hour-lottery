@@ -21,6 +21,10 @@ class User {
   gameStatus(ticketNo: string) {
     return apiHandler.get(`${API_URLS.user.ticketStatus}/${ticketNo}`);
   }
+
+  claimPrize(ticketNo: string, payload: any) {
+    return apiHandler.post(`${API_URLS.user.claimPrize}/${ticketNo}`, payload);
+  }
 }
 
 // export

@@ -7,7 +7,7 @@
             </div>
             <div class="col-md-2">
                 <button class="btn btn-block" :disabled="!ticketNumber" v-on:click="submitTicket">
-                    <i class="fa fa-list"></i> load <i class="k-loader k-loader--skin-dark" v-if="state.loader"></i>
+                    <i class="fa fa-send"></i> load <i class="k-loader k-loader--skin-dark" v-if="state.loader"></i>
                 </button>
             </div>
         </div>
