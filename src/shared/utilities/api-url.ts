@@ -10,7 +10,8 @@ export const API_URLS = {
         wallet: 'user/wallet',
         fund_wallet: 'user/fund-wallet',
         playGame: 'user/play_games',
-        ticketStatus: 'user/check_ticket_status'
+        ticketStatus: 'user/check_ticket_status',
+        claimPrize: 'user/claim_prize'
     },
     games: {
         all: 'games',

@@ -27,16 +27,55 @@
                 </td>
             </tr>
         </table>
-        <div class="price-option mt-2">
-            <button class="btn btn-success">
-                <i class="fa fa-gift"></i> Claim Reward
+        <div class="prize-option mt-3">
+            <button class="btn btn-success" v-on:click="state.rewardOptions = !state.rewardOptions">
+                <i class="fa fa-gift"></i> Claim Reward <i class="fa fa-caret-down"></i>
             </button>
+
+            <div class="mt-3 mt-2 animated fadeIn" v-if="state.rewardOptions">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <select id="" class="form-control" v-on:change="isValue" v-model="data.type">
+                            <option value="" selected disabled>--Select Type--</option>
+                            <option value="prize">Prize</option>
+                            <option value="value">Value</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-6" v-if="!state.isValue">
+                        <input type="text" class="form-control" placeholder="Enter Address Here..." v-model="data.address">
+                    </div>
+                    <div class="col-sm-6" v-if="state.isValue">
+                        <select class="form-control" v-model="data.bank">
+                            <option value="" selected disabled>Select Bank</option>
+                            <option v-bind:value="data.name" v-for="data in banks">{{data.name}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-6" v-if="state.isValue">
+                        <input type="number" class="form-control" placeholder="Enter Account Number" v-model="data.account_no"
+                               oninput="javascript: if (this.value.length > 10) this.value = this.value.slice(0, 10);">
+                    </div>
+                    <div class="col-sm-6" v-if="state.isValue">
+                        <input type="text" class="form-control" placeholder="Enter Account Name" v-model="data.account_name">
+                    </div>
+                    <div class="col sm-12 mt-2">
+                        <button class="btn btn-primary btn-block" v-on:click="submit">
+                            Request <i class="k-loader k-loader--light" v-if="state.loader"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
+    import allBanks from '../../../shared/utilities/banks.json';
+    import Swal from 'sweetalert2';
+    import {UserService} from '@/shared/services/User';
+    import {NotificationService} from '@/shared/services/Notification';
+    import {CUSTOM_CONSTANTS} from '@/shared/utilities/constants';
+    import {triggerModalOrOverlay} from '@/shared/utilities/helper';
 
     @Component({})
     export default class TicketStatus extends Vue {
@@ -44,10 +83,76 @@
         get stakes() {
             return this.$store.getters.stakes
         }
+
+        banks: any[] = [];
+
         state  = {
-            loader: false,
+            rewardOptions: false,
+            isValue: false,
+            loader: false
         };
 
+        data = {
+            type: '',
+            bank: '',
+            account_no: '',
+            account_name: '',
+            address: ''
+        } as any;
+
+        mounted(): void {
+            // console.log(allBanks);
+            this.banks = allBanks;
+        }
+
+        isValue(e: any): void {
+           this.state.isValue = e.target.value === 'value';
+        }
+
+        submit(): void {
+            const form = this.data;
+            if (form.type === 'value' && (form.bank === '' || form.account_no === '' || form.account_name === '')) {
+                Swal.fire('Invalid Data', 'Enter Account Details to Continue');
+                return;
+            } else if (form.type === 'prize' && form.address === ''){
+                Swal.fire('Invalid Data', 'Enter Destination Address');
+                return;
+            }
+
+            let payload: any;
+            payload = this.data;
+            if (form.type === 'value') {
+                delete payload['address'];
+            } else {
+                delete payload['bank'];
+                delete payload['account_no'];
+                delete payload['account_name'];
+            }
+            console.log(payload);
+            this.state.loader = true;
+            UserService.claimPrize(this.stakes.ticket_no, payload).then(res => {
+                this.state.loader = false;
+                console.log(res);
+                this.state.rewardOptions = false;
+                this.state.isValue = false;
+                Object(this.data).forEach((e: any, i: number) => {
+                    this.data[e] = ''
+                });
+                Swal.fire('Successful', `${res.data.message}`, 'success');
+                triggerModalOrOverlay("CLOSE",  "modal-fullscreen");
+            }, err => {
+                this.state.loader = false;
+                if (err.response.status === 404) {
+                    Swal.fire('Oops..!', `${err.response.data.message}`);
+                } else {
+                    NotificationService.error(
+                        err.response.data.message,
+                        null,
+                        CUSTOM_CONSTANTS.DEFAULT_ERROR_MESSAGE
+                    );
+                }
+            })
+        }
     }
 </script>
 
@@ -57,6 +162,15 @@
         .table th {
             background-color: rgba(54, 134, 21, 0.2);;
             color: #3a3531;
+        }
+        .prize-option{
+            .form-control {
+                height: 40px !important;
+                font-size: 13px !important;
+                &:focus {
+                    border-color: #0D7B3C;
+                }
+            }
         }
     }
 </style>
