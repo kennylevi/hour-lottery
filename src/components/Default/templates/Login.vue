@@ -23,13 +23,13 @@
         name="username"
         v-model="formData.username"
         class="form-control"
-        placeholder="Email address"
+        placeholder="Username/Phone number/Email address"
         required
         :class="{ 'is-invalid': $v.formData.username.$error }"
       />
       <div v-if="$v.formData.username.$error">
         <div class="k-form-error" v-if="!$v.formData.username.required">
-          Username is required
+          Username/Email/Phone number is required
         </div>
       </div>
     </div>

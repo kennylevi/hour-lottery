@@ -20,6 +20,7 @@ export const API_URLS = {
         game_results: 'games/game_results'
     },
     misc: {
-        validateCoupon: 'user/validate_coupon'
+        validateCoupon: 'user/validate_coupon',
+        states: 'states'
     }
 };

@@ -44,6 +44,27 @@
                     <div class="col-sm-6" v-if="!state.isValue">
                         <input type="text" class="form-control" placeholder="Enter Address Here..." v-model="data.address">
                     </div>
+                    <div class="col-sm-6" v-if="!state.isValue">
+                        <input type="text" class="form-control" placeholder="Upload your ID" v-model="data.id_card_image">
+                        <div class="image">
+                            <upload-image is="upload-image"
+                                :url="forms.create.url"
+                                :max_files="1"
+                                name="file"
+                                :resize_enabled="true"
+                                :resize_max_width="640"
+                                :button_html="forms.create.confirm"
+                                :button_class="'button is-primary'"
+                                v-on:upload-image-attemp="uploadImageAttempt"
+                                v-on:upload-image-success="uploadImageSuccess"
+                                v-on:upload-image-failure="uploadImageFailure"
+                                v-on:upload-image-loaded="uploadImageLoaded"
+                                v-on:upload-image-submit="uploadImageSubmit"
+                                v-on:upload-image-clicked="uploadImageClicked"
+                                v-on:upload-image-removed="uploadImageRemoved"
+                                ></upload-image>
+                        </div>
+                    </div>
                     <div class="col-sm-6" v-if="state.isValue">
                         <select class="form-control" v-model="data.bank">
                             <option value="" selected disabled>Select Bank</option>
@@ -76,9 +97,12 @@
     import {NotificationService} from '@/shared/services/Notification';
     import {CUSTOM_CONSTANTS} from '@/shared/utilities/constants';
     import {triggerModalOrOverlay} from '@/shared/utilities/helper';
+    import UploadImage from 'vue-upload-image';
 
-    @Component({})
+
+    @Component({components: {UploadImage}})
     export default class TicketStatus extends Vue {
+        
 
         get stakes() {
             return this.$store.getters.stakes
@@ -97,7 +121,8 @@
             bank: '',
             account_no: '',
             account_name: '',
-            address: ''
+            address: '',
+            id_card_image: ''
         } as any;
 
         mounted(): void {

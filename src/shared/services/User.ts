@@ -25,6 +25,10 @@ class User {
   claimPrize(ticketNo: string, payload: any) {
     return apiHandler.post(`${API_URLS.user.claimPrize}/${ticketNo}`, payload);
   }
+
+  getStates(): Promise<any> {
+    return apiHandler.get(`${API_URLS.misc.states}`);
+  }
 }
 
 // export

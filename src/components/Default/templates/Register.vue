@@ -147,6 +147,23 @@
       </div>
     </div>
 
+    <div>
+      <select class="form-control" required v-model="formData.state_of_residence">
+        <option disabled value="">Which state do you live?</option>
+        <option v-for="option in nigerian_states" v-bind:value="option.states.name">
+          {{ option.states.name }}
+        </option>
+      </select> 
+      <div v-if="$v.formData.state_of_residence.$error">
+        <div
+          class="k-form-error"
+          v-if="!$v.formData.state_of_residence.required"
+        >
+          State of Residence is required
+        </div>
+      </div>
+    </div>
+
     <button class="btn btn-primary btn-block" type="submit">
       <i class="fa fa-user-plus"></i> Sign Up
       <i class="k-loader k-loader--light" v-if="state.loader"></i>
@@ -193,6 +210,9 @@ export default class Register extends Vue {
       password_confirmation: {
         required,
         sameAs: sameAs("password")
+      },
+      state_of_residence: {
+        required
       }
     }
   };
@@ -201,6 +221,8 @@ export default class Register extends Vue {
     loader: false
   };
 
+  nigerian_states = []
+
   formData = {
     first_name: "",
     last_name: "",
@@ -208,7 +230,8 @@ export default class Register extends Vue {
     username: "",
     phone_no: "",
     password: "",
-    password_confirmation: ""
+    password_confirmation: "",
+    state_of_residence: ""
   };
 
   goToLogin(type: string): void {
@@ -232,6 +255,25 @@ export default class Register extends Vue {
         );
         this.$v.$reset();
         setObjectEmptyHelper(this.formData); // reset form
+        this.goToLogin("LOGIN");
+      })
+      .catch(err => {
+        this.state.loader = false;
+        console.log(err);
+        NotificationService.error(
+          `${err.message}`,
+          err.response,
+          "Error Occurred"
+        );
+      });
+  }
+
+  mounted(){
+    UserService.getStates()
+      .then(res => {
+        this.state.loader = false;
+        console.log(res);
+        this.nigerian_states = res.data.data
       })
       .catch(err => {
         this.state.loader = false;
