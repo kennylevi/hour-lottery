@@ -6,6 +6,7 @@ import Notifications from "vue-notification";
 import Vuelidate from "vuelidate";
 import VueI18n from 'vue-i18n'
 import 'sweetalert2/src/sweetalert2.scss'
+import VueFilterDateFormat from '@vuejs-community/vue-filter-date-format';
 
 // import HTTP request inerceptor
 import Interceptor from "./shared/services/Interceptor";
@@ -37,6 +38,26 @@ const numberFormats = {
     }
   }
 }
+
+Vue.use(VueFilterDateFormat, {
+  dayOfWeekNames: [
+    'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday',
+    'Friday', 'Saturday'
+  ],
+  dayOfWeekNamesShort: [
+    'Su', 'Mo', 'Tu', 'We', 'Tr', 'Fr', 'Sa'
+  ],
+  monthNames: [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ],
+  monthNamesShort: [
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+  ],
+  // Timezone offset, in minutes (0 - UTC, 180 - Russia, undefined - current)
+  timezone: 0
+});
 
 // register with `formatter` option
 const i18n = new VueI18n({

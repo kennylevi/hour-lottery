@@ -239,7 +239,7 @@ export default Vue.extend({
 
     logout(): void {
       this.loggedIn = false;
-      token.removeAuthUser();
+      token.logout();
       this.$store.dispatch("loggedIn", false); // assign data modal type to coming event
     }
   }

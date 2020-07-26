@@ -1,6 +1,7 @@
 const state = {
     games: [],
-    stakes: {} as any
+    stakes: {} as any,
+    playedGames: []
 };
 
 const getters = {
@@ -9,16 +10,26 @@ const getters = {
     },
     stakes(state: any) {
         return state.stakes;
+    },
+    playedGames(state: any) {
+        return state.playedGames;
     }
 };
 
 const mutations = {
     addGame(state: any, game: any) {
-        state.games.unshift(game);
+        if (game) {
+            state.games.unshift(game);
+        } else {
+            state.games = [];
+        }
     },
     gameStakes(state: any, stakes: any) {
-        console.log(stakes);
         state.stakes = stakes;
+    },
+    gamesPlayed(state: any, games: any) {
+        console.log(games.data);
+        state.playedGames = [...games.data];
     }
 };
 
@@ -28,6 +39,9 @@ const actions = {
     },
     gameStakes({commit}: any, data: any) {
         commit('gameStakes', data);
+    },
+    gamesPlayed({commit}: any, games: any) {
+        commit('gamesPlayed', games);
     }
 };
 

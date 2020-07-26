@@ -13,7 +13,6 @@ export const Cookie = {
     const date = new Date();
     date.setTime(date.getTime() + ex.expires * 24 * 60 * 60 * 1000);
     const expires = "expires=" + date.toUTCString();
-
     document.cookie = cname + "=" + encryptedUser + ";" + expires + ";path=/";
   },
 

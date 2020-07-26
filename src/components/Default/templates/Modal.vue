@@ -36,6 +36,7 @@
 
                       <TicketStatus v-if="modalType === 'TICKET_STAKES'"/>
 
+                      <PlayedGames v-if="modalType === 'PLAYED_GAMES'"/>
                       <button
                        id="closeBtn"
                         type="button"
@@ -75,6 +76,7 @@ import ForgotPassword from "./ForgotPassword.vue";
 import EnterAmount from "./EnterAmount.vue";
 import {triggerModalOrOverlay} from '@/shared/utilities/helper';
 import TicketStatus from '@/components/Default/templates/TicketStatus.vue';
+import PlayedGames from '@/components/Default/templates/PlayedGames.vue';
 
 export default Vue.extend({
   name: "Modal",
@@ -84,7 +86,8 @@ export default Vue.extend({
     Register,
     ForgotPassword,
     EnterAmount,
-    TicketStatus
+    TicketStatus,
+    PlayedGames
   },
 
   data() {

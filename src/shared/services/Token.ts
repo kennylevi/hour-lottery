@@ -11,9 +11,9 @@ class Token {
    */
   setAuthUser = (user: any) => {
     // Cookies.
-    Cookie.set(CUSTOM_CONSTANTS.APP_VARIABLE, user, {
-      expires: 1
-    });
+    // Cookie.set(CUSTOM_CONSTANTS.APP_VARIABLE, user, {
+    //   expires: 1
+    // });
     Session.set(CUSTOM_CONSTANTS.APP_VARIABLE, user);
   };
 
@@ -21,16 +21,17 @@ class Token {
    * getAuthUser
    */
   getAuthUser = () => {
-    return Cookie.get(CUSTOM_CONSTANTS.APP_VARIABLE);
+    return Session.get(CUSTOM_CONSTANTS.APP_VARIABLE);
   };
 
   getAuthUserToken = () => {
-    return Cookie.getToken().accessToken || Cookie.getToken();
+    // return Cookie.getToken().accessToken || Cookie.getToken();
+    return Session.get(CUSTOM_CONSTANTS.APP_VARIABLE).accessToken || Session.get(CUSTOM_CONSTANTS.APP_VARIABLE);
     // return Cookie.getToken();
   };
 
   removeAuthUser = () => {
-    Cookie.remove(CUSTOM_CONSTANTS.APP_VARIABLE);
+    // Cookie.remove(CUSTOM_CONSTANTS.APP_VARIABLE);
     Session.remove(CUSTOM_CONSTANTS.APP_VARIABLE);
   };
 

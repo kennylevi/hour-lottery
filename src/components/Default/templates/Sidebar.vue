@@ -104,11 +104,12 @@
 
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
-    import {dateFormatter} from '@/shared/utilities/helper';
+    import {dateFormatter, triggerModalOrOverlay} from '@/shared/utilities/helper';
     import {MiscService} from '@/shared/services/Misc';
     import {NotificationService} from '@/shared/services/Notification';
     import {CUSTOM_CONSTANTS} from '@/shared/utilities/constants';
     import {UserService} from '@/shared/services/User';
+    import Swal from 'sweetalert2';
 
     export default Vue.extend({
         name: 'Sidebar',
@@ -163,6 +164,8 @@
                 }
                 if (this.$store.getters.games.length) {
                     localStorage.setItem('GAMES', JSON.stringify(this.$store.getters.games));
+                } else {
+                    games = [];
                 }
                 return games
             }
@@ -199,12 +202,20 @@
                 UserService.playGame(payload).then(res => {
                     this.loader = '';
                     console.log(res.data);
-                    NotificationService.success(`${res.data.message}`, CUSTOM_CONSTANTS.DEFAULT_SUCCESS_MESSAGE);
-                    this.games = [];
+                    localStorage.removeItem('GAMES'); // REMOVE GAMES FROM STORAGE
+                    this.$store.dispatch('addGame', ''); // remove games
+                    this.closeNav();
+                    triggerModalOrOverlay("SHOW", "modal-fullscreen"); // on success show modal
+                    this.$store.dispatch("openModal", 'PLAYED_GAMES'); // assign data modal type to coming event
+                    this.$store.dispatch('gamesPlayed', res.data)
                 }, err => {
                     this.loader = '';
                     console.log(err);
-                    NotificationService.error('Error', err, CUSTOM_CONSTANTS.DEFAULT_ERROR_MESSAGE);
+                    if (err.response.status === 404) {
+                        Swal.fire('', `${err.response.data.message}`, 'error');
+                    } else {
+                        NotificationService.error('Error', err, CUSTOM_CONSTANTS.DEFAULT_ERROR_MESSAGE);
+                    }
                 })
             }
 

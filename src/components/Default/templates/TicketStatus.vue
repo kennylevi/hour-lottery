@@ -1,4 +1,4 @@
-<template v-if="stakes">
+<template>
     <div class="table-responsive game-status">
         <h3 class="text-success">Game Status</h3>
         <table class="table table-bordered table-striped table-hover">
@@ -48,21 +48,21 @@
                         <input type="text" class="form-control" placeholder="Upload your ID" v-model="data.id_card_image">
                         <div class="image">
                             <upload-image is="upload-image"
-                                :url="forms.create.url"
-                                :max_files="1"
-                                name="file"
-                                :resize_enabled="true"
-                                :resize_max_width="640"
-                                :button_html="forms.create.confirm"
-                                :button_class="'button is-primary'"
-                                v-on:upload-image-attemp="uploadImageAttempt"
-                                v-on:upload-image-success="uploadImageSuccess"
-                                v-on:upload-image-failure="uploadImageFailure"
-                                v-on:upload-image-loaded="uploadImageLoaded"
-                                v-on:upload-image-submit="uploadImageSubmit"
-                                v-on:upload-image-clicked="uploadImageClicked"
-                                v-on:upload-image-removed="uploadImageRemoved"
-                                ></upload-image>
+                                          :url="forms.create.url"
+                                          :max_files="1"
+                                          name="file"
+                                          :resize_enabled="true"
+                                          :resize_max_width="640"
+                                          :button_html="forms.create.confirm"
+                                          :button_class="'button is-primary'"
+                                          v-on:upload-image-attemp="uploadImageAttempt"
+                                          v-on:upload-image-success="uploadImageSuccess"
+                                          v-on:upload-image-failure="uploadImageFailure"
+                                          v-on:upload-image-loaded="uploadImageLoaded"
+                                          v-on:upload-image-submit="uploadImageSubmit"
+                                          v-on:upload-image-clicked="uploadImageClicked"
+                                          v-on:upload-image-removed="uploadImageRemoved"
+                            ></upload-image>
                         </div>
                     </div>
                     <div class="col-sm-6" v-if="state.isValue">
@@ -105,7 +105,7 @@
         
 
         get stakes() {
-            return this.$store.getters.stakes
+            return this.$store.getters.stakes;
         }
 
         banks: any[] = [];
