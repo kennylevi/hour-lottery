@@ -18,7 +18,8 @@ const mutations = {
   },
   
   setUser(state: any, user: any) {
-    state.user = user;
+    console.log(user);
+    state.user = {...state.user, ...user};
   }
 };
 

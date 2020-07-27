@@ -204,26 +204,17 @@ export default Vue.extend({
     },
 
     userData(): any {
-      console.log("Token: ", this.$store.getters.getUser);
       if (this.$store.getters.loggedIn) {
+        console.log("Token: ", this.$store.getters.getUser);
         this.walletBalance = this.$store.getters.getUser.wallet.wallet_balance;
         this.loggedData = this.$store.getters.getUser;
-      }
-
-      if (!!token.getAuthUser()) {
+        return this.loggedData;
+      } else if (!!token.getAuthUser()) {
         console.log(token.getAuthUser());
         this.loggedData = token.getAuthUser();
         this.walletBalance = token.getAuthUser().wallet.wallet_balance;
+        return this.loggedData
       }
-      return this.loggedData
-    }
-  },
-
-  watch: {
-    user(val: any): any {
-      console.log("User: ", val);
-      this.walletBalance = val.wallet.wallet_balance;
-      //return this.$store.getters.getUser;
     }
   },
 

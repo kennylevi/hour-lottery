@@ -47,6 +47,7 @@ import { required } from "vuelidate/lib/validators";
 import { CUSTOM_CONSTANTS } from '@/shared/utilities/constants';
 import { setObjectEmptyHelper, triggerModalOrOverlay } from '@/shared/utilities/helper';
 import {token} from '@/shared/services/Token';
+import Swal from 'sweetalert2';
 
 @Component({
   components: {Paystack}
@@ -111,14 +112,14 @@ export default class EnterAmount extends Vue {
         // token.setAuthUser(res.data.data);
         console.log(res.data.data);
         this.$v.$reset();
-        const user = this.$store.getters.getUser;
-        user.wallet = res.data.data;
-        triggerModalOrOverlay("CLOSE",  "modal-fullscreen");
-        NotificationService.success(
-          "Wallet Funded Successfully",
-          CUSTOM_CONSTANTS.DEFAULT_SUCCESS_MESSAGE,
-          6
-        );
+        this.formData.amount = '';
+        this.$store.dispatch('setUser', res.data.data);
+        const user = token.getAuthUser();
+        user.wallet.wallet_balance = res.data.data.wallet.wallet_balance;
+        token.setAuthUser(user); // set back the user
+        // user.wallet = res.data.data;
+        triggerModalOrOverlay("HIDE",  "modal-fullscreen");
+        Swal.fire('', 'Wallet Funded Successfully', 'success');
       },
       err => {
         this.state.loader = false;
